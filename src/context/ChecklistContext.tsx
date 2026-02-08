@@ -13,7 +13,7 @@ export interface ChecklistContextType {
   deleteTask: (checklistId: string, taskId: string) => void;
 }
 
-export const ChecklistContext = createContext<ChecklistContextType | undefined>(undefined);
+const ChecklistContext = createContext<ChecklistContextType | undefined>(undefined);
 
 interface ChecklistProviderProps {
   children: ReactNode;
@@ -138,3 +138,5 @@ export const ChecklistProvider = ({ children }: ChecklistProviderProps) => {
     </ChecklistContext.Provider>
   );
 };
+
+export { ChecklistContext };

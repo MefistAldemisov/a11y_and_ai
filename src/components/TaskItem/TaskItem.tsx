@@ -56,11 +56,13 @@ export const TaskItem = ({ task, onToggle, onEdit, onDelete }: TaskItemProps) =>
               ))}
             </Text>
           )}
-          <div className="task-item__deadline">
-            <Text variant="caption-2" color="secondary">
-              Deadline: {formattedDeadline}
-            </Text>
-          </div>
+          {task.deadline && (
+            <div className="task-item__deadline">
+              <Text variant="caption-2" color="secondary">
+                Deadline: {formattedDeadline}
+              </Text>
+            </div>
+          )}
         </div>
         <div className="task-item__actions">
           <Button view="flat" size="s" onClick={() => onEdit(task)}>

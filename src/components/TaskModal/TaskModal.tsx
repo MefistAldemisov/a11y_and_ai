@@ -46,15 +46,15 @@ function TaskModalContent({ task, onClose, onSave }: Omit<TaskModalProps, 'open'
   };
 
   const validateDeadline = (value: string): string | undefined => {
-    if (!value) {
-      return 'Deadline is required';
-    }
-    const selectedDate = new Date(value);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    if (selectedDate < today) {
-      return 'Deadline cannot be in the past';
+    // Deadline is optional, only validate if provided
+    if (value) {
+      const selectedDate = new Date(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      if (selectedDate < today) {
+        return 'Deadline cannot be in the past';
+      }
     }
     return undefined;
   };
@@ -160,7 +160,7 @@ function TaskModalContent({ task, onClose, onSave }: Omit<TaskModalProps, 'open'
       <div className="task-modal__row">
         <div>
           <Text variant="body-2" className="task-modal__label">
-            Deadline <span style={{ color: 'var(--g-color-text-danger)' }}>*</span>
+            Deadline (optional)
           </Text>
           <input
             type="date"
