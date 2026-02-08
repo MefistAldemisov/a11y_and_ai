@@ -1,0 +1,19 @@
+.checklist-modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--g-spacing-4);
+  padding: var(--g-spacing-5);
+}
+
+.checklist-modal__label {
+  display: block;
+  margin-bottom: var(--g-spacing-1);
+  font-weight: 500;
+}
+
+.checklist-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--g-spacing-2);
+  margin-top: var(--g-spacing-4);
+}

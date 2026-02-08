@@ -1,0 +1,17 @@
+@import '@gravity-ui/uikit/styles/fonts.css';
+@import '@gravity-ui/uikit/styles/styles.css';
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--g-text-body-font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
