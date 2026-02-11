@@ -94,3 +94,11 @@
   text-align: center;
   padding: var(--g-spacing-5);
 }
+
+.checklist-card__title-row > .checklist-card__actions {
+  display: none;
+}
+
+.checklist-card__title-row:hover > .checklist-card__actions {
+  display: flex;
+}

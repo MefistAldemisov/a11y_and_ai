@@ -47,3 +47,11 @@
   display: flex;
   gap: var(--g-spacing-2);
 }
+
+.task-item__content > .task-item__actions {
+  display: none;
+}
+
+.task-item__content:hover > .task-item__actions {
+  display: flex;
+}
