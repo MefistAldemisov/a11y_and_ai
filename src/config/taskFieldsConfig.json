@@ -1,0 +1,28 @@
+{
+  "fields": [
+    {
+      "name": "title",
+      "label": "Title",
+      "visible": true,
+      "required": true
+    },
+    {
+      "name": "description",
+      "label": "Description",
+      "visible": false,
+      "required": false
+    },
+    {
+      "name": "priority",
+      "label": "Priority",
+      "visible": true,
+      "required": false
+    },
+    {
+      "name": "deadline",
+      "label": "Deadline",
+      "visible": false,
+      "required": false
+    }
+  ]
+}

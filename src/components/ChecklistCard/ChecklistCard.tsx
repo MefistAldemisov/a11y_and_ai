@@ -32,41 +32,41 @@ export const ChecklistCard = ({
   return (
     <Card className="checklist-card">
       <div className="checklist-card__header">
-        <div
-          className="checklist-card__title-row"
-          onClick={() => setIsExpanded(!isExpanded)}
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              setIsExpanded(!isExpanded);
-            }
-          }}
-        >
+        <div className="checklist-card__header-row">
           <button
-            className="checklist-card__collapse-button"
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsExpanded(!isExpanded);
-            }}
-            aria-label={isExpanded ? 'Collapse checklist' : 'Expand checklist'}
+            className="checklist-card__expand-button"
+            onClick={() => setIsExpanded(!isExpanded)}
+            aria-expanded={isExpanded}
+            aria-label={`${checklist.title}. ${isExpanded ? 'Свернуть чеклист' : 'Развернуть чеклист'}`}
           >
             <Icon data={isExpanded ? ChevronUp : ChevronDown} size={20} />
-          </button>
-          <div className="checklist-card__title-content">
-            <Text variant="header-1" className="checklist-card__title">
+            <span className="checklist-card__title-text">
               {checklist.title}
-            </Text>
-          </div>
+            </span>
+          </button>
           <div className="checklist-card__actions">
-            <Button view="action" size="m" onClick={(e) => { e.stopPropagation(); onAddTask(checklist.id); }}>
+            <Button
+              view="action"
+              size="m"
+              onClick={() => onAddTask(checklist.id)}
+              aria-label="Добавить задачу"
+            >
               <Icon data={Plus} size={16} />
             </Button>
-            <Button view="outlined" size="m" onClick={(e) => { e.stopPropagation(); onEditChecklist(checklist); }}>
+            <Button
+              view="outlined"
+              size="m"
+              onClick={() => onEditChecklist(checklist)}
+              aria-label="Редактировать чеклист"
+            >
               <Icon data={Pencil} size={16} />
             </Button>
-            <Button view="outlined" size="m" onClick={(e) => { e.stopPropagation(); onDeleteChecklist(checklist.id); }}>
+            <Button
+              view="outlined"
+              size="m"
+              onClick={() => onDeleteChecklist(checklist.id)}
+              aria-label="Удалить чеклист"
+            >
               <Icon data={TrashBin} size={16} />
             </Button>
           </div>

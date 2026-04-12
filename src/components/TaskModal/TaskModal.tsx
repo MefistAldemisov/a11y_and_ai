@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { Modal, TextInput, TextArea, Button, Select, Text } from '@gravity-ui/uikit';
 import type { Task, Priority } from '../../types';
 import { PRIORITY_OPTIONS, DEFAULT_PRIORITY } from '../../constants';
+import taskFieldsConfig from '../../config/taskFieldsConfig.json';
 import './TaskModal.css';
+
+const isFieldVisible = (fieldName: string): boolean =>
+  taskFieldsConfig.fields.find((f) => f.name === fieldName)?.visible ?? true;
 
 interface TaskModalProps {
   open: boolean;
@@ -129,69 +133,81 @@ function TaskModalContent({ task, onClose, onSave }: Omit<TaskModalProps, 'open'
 
   return (
     <div className="task-modal__form">
-      <div>
-        <Text variant="body-2" className="task-modal__label">
-          Title <span style={{ color: 'var(--g-color-text-danger)' }}>*</span>
-        </Text>
-        <TextInput
-          value={title}
-          onUpdate={handleTitleChange}
-          onBlur={handleTitleBlur}
-          placeholder="Enter task title"
-          size="l"
-          autoFocus
-          validationState={touched.title && errors.title ? 'invalid' : undefined}
-          errorMessage={touched.title ? errors.title : undefined}
-        />
-      </div>
-      <div>
-        <Text variant="body-2" className="task-modal__label">Description</Text>
-        <TextArea
-          value={description}
-          onUpdate={handleDescriptionChange}
-          onBlur={handleDescriptionBlur}
-          placeholder="Enter task description"
-          rows={3}
-          size="l"
-          validationState={touched.description && errors.description ? 'invalid' : undefined}
-          errorMessage={touched.description ? errors.description : undefined}
-        />
-      </div>
-      <div className="task-modal__row">
+      <h2 id="task-modal-title" className="task-modal__title">
+        {task ? 'Edit Task' : 'Create New Task'}
+      </h2>
+      {isFieldVisible('title') && (
         <div>
           <Text variant="body-2" className="task-modal__label">
-            Deadline (optional)
+            Title <span style={{ color: 'var(--g-color-text-danger)' }}>*</span>
           </Text>
-          <input
-            type="date"
-            value={deadline}
-            onChange={(e) => handleDeadlineChange(e.target.value)}
-            onBlur={handleDeadlineBlur}
-            className="task-modal__date-input"
-            required
-            aria-invalid={touched.deadline && errors.deadline ? 'true' : 'false'}
-            aria-describedby={touched.deadline && errors.deadline ? 'deadline-error' : undefined}
-          />
-          {touched.deadline && errors.deadline && (
-            <Text
-              id="deadline-error"
-              variant="caption-2"
-              color="danger"
-              style={{ marginTop: '4px', display: 'block' }}
-            >
-              {errors.deadline}
-            </Text>
-          )}
-        </div>
-        <div>
-          <Text variant="body-2" className="task-modal__label">Priority</Text>
-          <Select
-            value={[priority]}
-            onUpdate={(values) => setPriority(values[0] as Priority)}
-            options={PRIORITY_OPTIONS}
+          <TextInput
+            value={title}
+            onUpdate={handleTitleChange}
+            onBlur={handleTitleBlur}
+            placeholder="Enter task title"
             size="l"
+            autoFocus
+            validationState={touched.title && errors.title ? 'invalid' : undefined}
+            errorMessage={touched.title ? errors.title : undefined}
           />
         </div>
+      )}
+      {isFieldVisible('description') && (
+        <div>
+          <Text variant="body-2" className="task-modal__label">Description</Text>
+          <TextArea
+            value={description}
+            onUpdate={handleDescriptionChange}
+            onBlur={handleDescriptionBlur}
+            placeholder="Enter task description"
+            rows={3}
+            size="l"
+            validationState={touched.description && errors.description ? 'invalid' : undefined}
+            errorMessage={touched.description ? errors.description : undefined}
+          />
+        </div>
+      )}
+      <div className="task-modal__row">
+        {isFieldVisible('deadline') && (
+          <div>
+            <Text variant="body-2" className="task-modal__label">
+              Deadline (optional)
+            </Text>
+            <input
+              type="date"
+              value={deadline}
+              onChange={(e) => handleDeadlineChange(e.target.value)}
+              onBlur={handleDeadlineBlur}
+              className="task-modal__date-input"
+              required
+              aria-invalid={touched.deadline && errors.deadline ? 'true' : 'false'}
+              aria-describedby={touched.deadline && errors.deadline ? 'deadline-error' : undefined}
+            />
+            {touched.deadline && errors.deadline && (
+              <Text
+                id="deadline-error"
+                variant="caption-2"
+                color="danger"
+                aria-live="assertive"
+                style={{ marginTop: '4px', display: 'block' }}
+              >
+                {errors.deadline}
+              </Text>
+            )}
+          </div>
+        )}
+        {isFieldVisible('priority') && (
+          <div>
+            <Text variant="body-2" className="task-modal__label">Priority</Text>
+            <Select
+              value={[priority]}
+              onUpdate={(values) => setPriority(values[0] as Priority)}
+              options={PRIORITY_OPTIONS}
+              size="l"
+            />
+          </div>
+        )}
       </div>
       <div className="task-modal__actions">
         <Button view="flat" size="l" onClick={handleClose}>
@@ -212,7 +228,7 @@ function TaskModalContent({ task, onClose, onSave }: Omit<TaskModalProps, 'open'
 
 export const TaskModal = ({ open, task, onClose, onSave }: TaskModalProps) => {
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} aria-labelledby="task-modal-title">
       {open && (
         <TaskModalContent
           key={task?.id || 'new'}

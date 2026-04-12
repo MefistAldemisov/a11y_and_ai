@@ -5,6 +5,18 @@
   padding: var(--g-spacing-5);
 }
 
+.task-modal__title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .task-modal__label {
   display: block;
   margin-bottom: var(--g-spacing-1);

@@ -95,6 +95,9 @@ function ChecklistModalContent({ checklist, onClose, onSave }: Omit<ChecklistMod
 
   return (
     <div className="checklist-modal__form">
+      <h2 id="checklist-modal-title" className="checklist-modal__title">
+        {checklist ? 'Edit Checklist' : 'Create New Checklist'}
+      </h2>
       <div>
         <Text variant="body-2" className="checklist-modal__label">
           Title <span style={{ color: 'var(--g-color-text-danger)' }}>*</span>
@@ -137,7 +140,7 @@ function ChecklistModalContent({ checklist, onClose, onSave }: Omit<ChecklistMod
 
 export const ChecklistModal = ({ open, checklist, onClose, onSave }: ChecklistModalProps) => {
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={onClose} aria-labelledby="checklist-modal-title">
       {open && (
         <ChecklistModalContent
           key={checklist?.id || 'new'}
