@@ -100,16 +100,19 @@ export const ChecklistCard = ({
               No tasks yet. Add your first task!
             </Text>
           ) : (
-            checklist.tasks.map((task) => (
-              <TaskItem
-                key={task.id}
-                task={task}
-                onToggle={(taskId) => onToggleTask(checklist.id, taskId)}
-                onEdit={(task) => onEditTask(checklist.id, task)}
-                onDelete={(taskId) => onDeleteTask(checklist.id, taskId)}
-              />
-            ))
-          )}
+           <ul className="checklist-card__task-list" role="list">
+             {checklist.tasks.map((task) => (
+               <li key={task.id} className="checklist-card__task-list-item" role="listitem">
+                 <TaskItem
+                   task={task}
+                   onToggle={(taskId) => onToggleTask(checklist.id, taskId)}
+                   onEdit={(task) => onEditTask(checklist.id, task)}
+                   onDelete={(taskId) => onDeleteTask(checklist.id, taskId)}
+                 />
+               </li>
+             ))}
+           </ul>
+         )}
         </div>
       )}
     </Card>

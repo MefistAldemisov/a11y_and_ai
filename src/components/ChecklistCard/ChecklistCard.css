@@ -100,6 +100,16 @@
   margin-bottom: var(--g-spacing-4);
 }
 
+.checklist-card__task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.checklist-card__task-list-item {
+  list-style: none;
+}
+
 .checklist-card__empty {
   text-align: center;
   padding: var(--g-spacing-5);

@@ -36,3 +36,13 @@
   text-align: center;
   padding: var(--g-spacing-10);
 }
+
+.app__checklist-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.app__checklist-list-item {
+  list-style: none;
+}

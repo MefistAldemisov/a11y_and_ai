@@ -92,18 +92,21 @@ function App() {
               </Text>
             </div>
           ) : (
-            checklists.map((checklist) => (
-              <ChecklistCard
-                key={checklist.id}
-                checklist={checklist}
-                onAddTask={handleAddTask}
-                onEditChecklist={checklistModal.open}
-                onDeleteChecklist={deleteChecklist}
-                onToggleTask={toggleTask}
-                onEditTask={handleEditTask}
-                onDeleteTask={deleteTask}
-              />
-            ))
+            <ul className="app__checklist-list" role="list">
+              {checklists.map((checklist) => (
+                <li key={checklist.id} className="app__checklist-list-item" role="listitem">
+                  <ChecklistCard
+                    checklist={checklist}
+                    onAddTask={handleAddTask}
+                    onEditChecklist={checklistModal.open}
+                    onDeleteChecklist={deleteChecklist}
+                    onToggleTask={toggleTask}
+                    onEditTask={handleEditTask}
+                    onDeleteTask={deleteTask}
+                  />
+                </li>
+              ))}
+            </ul>
           )}
         </div>
 
