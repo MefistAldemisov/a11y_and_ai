@@ -1,4 +1,5 @@
 export const STORAGE_KEY = 'todo-checklists';
+export const HARD_MODE_STORAGE_KEY = 'todo-hard-mode';
 
 export const PRIORITY_OPTIONS = [
   { value: 'low', content: 'Low' },

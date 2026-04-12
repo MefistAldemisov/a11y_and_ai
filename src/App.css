@@ -14,6 +14,18 @@
   margin-right: auto;
 }
 
+.app__header-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--g-spacing-4);
+}
+
+.app__hard-mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--g-spacing-2);
+}
+
 .app__content {
   max-width: 1200px;
   margin-left: auto;

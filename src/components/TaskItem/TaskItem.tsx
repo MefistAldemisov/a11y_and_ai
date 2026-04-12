@@ -1,6 +1,7 @@
 import { Card, Checkbox, Text, Button, Icon, Label } from '@gravity-ui/uikit';
 import { Pencil, TrashBin } from '@gravity-ui/icons';
 import type { Task } from '../../types';
+import { useChecklists } from '../../hooks/useChecklists';
 import taskFieldsConfig from '../../config/taskFieldsConfig.json';
 import './TaskItem.css';
 
@@ -15,6 +16,7 @@ interface TaskItemProps {
 }
 
 export const TaskItem = ({ task, onToggle, onEdit, onDelete }: TaskItemProps) => {
+  const { hardMode } = useChecklists();
   const deadlineDate = new Date(task.deadline);
   const isValidDate = !isNaN(deadlineDate.getTime());
   const formattedDeadline = isValidDate
@@ -73,10 +75,10 @@ export const TaskItem = ({ task, onToggle, onEdit, onDelete }: TaskItemProps) =>
           )}
         </div>
         <div className="task-item__actions">
-          <Button view="flat" size="s" onClick={() => onEdit(task)}>
+          <Button view="flat" size="s" onClick={() => onEdit(task)} aria-label={hardMode ? undefined : "Редактировать задачу"}>
             <Icon data={Pencil} size={16} />
           </Button>
-          <Button view="flat" size="s" onClick={() => onDelete(task.id)}>
+          <Button view="flat" size="s" onClick={() => onDelete(task.id)} aria-label={hardMode ? undefined : "Удалить задачу"}>
             <Icon data={TrashBin} size={16} />
           </Button>
         </div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Card, Text, Button, Icon, Progress } from '@gravity-ui/uikit';
 import { Plus, Pencil, TrashBin, ChevronDown, ChevronUp } from '@gravity-ui/icons';
 import type { Checklist, Task } from '../../types';
+import { useChecklists } from '../../hooks/useChecklists';
 import { TaskItem } from '../TaskItem';
 import './ChecklistCard.css';
 
@@ -24,6 +25,7 @@ export const ChecklistCard = ({
   onEditTask,
   onDeleteTask,
 }: ChecklistCardProps) => {
+  const { hardMode } = useChecklists();
   const [isExpanded, setIsExpanded] = useState(true);
   const completedTasks = checklist.tasks.filter((task) => task.completed).length;
   const totalTasks = checklist.tasks.length;
@@ -36,8 +38,8 @@ export const ChecklistCard = ({
           <button
             className="checklist-card__expand-button"
             onClick={() => setIsExpanded(!isExpanded)}
-            aria-expanded={isExpanded}
-            aria-label={`${checklist.title}. ${isExpanded ? 'Свернуть чеклист' : 'Развернуть чеклист'}`}
+            aria-expanded={hardMode ? undefined : isExpanded}
+            aria-label={hardMode ? undefined : `${checklist.title}. ${isExpanded ? 'Свернуть чеклист' : 'Развернуть чеклист'}`}
           >
             <Icon data={isExpanded ? ChevronUp : ChevronDown} size={20} />
             <span className="checklist-card__title-text">
@@ -49,7 +51,7 @@ export const ChecklistCard = ({
               view="action"
               size="m"
               onClick={() => onAddTask(checklist.id)}
-              aria-label="Добавить задачу"
+              aria-label={hardMode ? undefined : "Добавить задачу"}
             >
               <Icon data={Plus} size={16} />
             </Button>
@@ -57,7 +59,7 @@ export const ChecklistCard = ({
               view="outlined"
               size="m"
               onClick={() => onEditChecklist(checklist)}
-              aria-label="Редактировать чеклист"
+              aria-label={hardMode ? undefined : "Редактировать чеклист"}
             >
               <Icon data={Pencil} size={16} />
             </Button>
@@ -65,7 +67,7 @@ export const ChecklistCard = ({
               view="outlined"
               size="m"
               onClick={() => onDeleteChecklist(checklist.id)}
-              aria-label="Удалить чеклист"
+              aria-label={hardMode ? undefined : "Удалить чеклист"}
             >
               <Icon data={TrashBin} size={16} />
             </Button>

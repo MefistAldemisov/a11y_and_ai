@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Modal, TextInput, TextArea, Button, Select, Text } from '@gravity-ui/uikit';
 import type { Task, Priority } from '../../types';
 import { PRIORITY_OPTIONS, DEFAULT_PRIORITY } from '../../constants';
+import { useChecklists } from '../../hooks/useChecklists';
 import taskFieldsConfig from '../../config/taskFieldsConfig.json';
 import './TaskModal.css';
 
@@ -22,6 +23,7 @@ interface ValidationErrors {
 }
 
 function TaskModalContent({ task, onClose, onSave }: Omit<TaskModalProps, 'open'>) {
+  const { hardMode } = useChecklists();
   const [title, setTitle] = useState(task?.title || '');
   const [description, setDescription] = useState(task?.description || '');
   const [deadline, setDeadline] = useState(task?.deadline || '');
@@ -133,7 +135,7 @@ function TaskModalContent({ task, onClose, onSave }: Omit<TaskModalProps, 'open'
 
   return (
     <div className="task-modal__form">
-      <h2 id="task-modal-title" className="task-modal__title">
+      <h2 id={hardMode ? undefined : "task-modal-title"} className="task-modal__title">
         {task ? 'Edit Task' : 'Create New Task'}
       </h2>
       {isFieldVisible('title') && (
@@ -181,15 +183,15 @@ function TaskModalContent({ task, onClose, onSave }: Omit<TaskModalProps, 'open'
               onBlur={handleDeadlineBlur}
               className="task-modal__date-input"
               required
-              aria-invalid={touched.deadline && errors.deadline ? 'true' : 'false'}
-              aria-describedby={touched.deadline && errors.deadline ? 'deadline-error' : undefined}
+              aria-invalid={hardMode ? undefined : (touched.deadline && errors.deadline ? 'true' : 'false')}
+              aria-describedby={hardMode ? undefined : (touched.deadline && errors.deadline ? 'deadline-error' : undefined)}
             />
             {touched.deadline && errors.deadline && (
               <Text
                 id="deadline-error"
                 variant="caption-2"
                 color="danger"
-                aria-live="assertive"
+                aria-live={hardMode ? undefined : "assertive"}
                 style={{ marginTop: '4px', display: 'block' }}
               >
                 {errors.deadline}
@@ -227,8 +229,9 @@ function TaskModalContent({ task, onClose, onSave }: Omit<TaskModalProps, 'open'
 }
 
 export const TaskModal = ({ open, task, onClose, onSave }: TaskModalProps) => {
+  const { hardMode } = useChecklists();
   return (
-    <Modal open={open} onClose={onClose} aria-labelledby="task-modal-title">
+    <Modal open={open} onClose={onClose} aria-labelledby={hardMode ? undefined : "task-modal-title"}>
       {open && (
         <TaskModalContent
           key={task?.id || 'new'}

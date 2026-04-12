@@ -1,4 +1,4 @@
-import { ThemeProvider, Button, Icon, Text } from '@gravity-ui/uikit';
+import { ThemeProvider, Button, Icon, Text, Switch } from '@gravity-ui/uikit';
 import { Plus } from '@gravity-ui/icons';
 import type { Checklist, Task } from './types';
 import { ChecklistCard } from './components/ChecklistCard';
@@ -11,6 +11,7 @@ import './App.css';
 function App() {
   const {
     checklists,
+    hardMode,
     createChecklist,
     updateChecklist,
     deleteChecklist,
@@ -18,6 +19,7 @@ function App() {
     updateTask,
     toggleTask,
     deleteTask,
+    toggleHardMode,
   } = useChecklists();
 
   const checklistModal = useModal<Checklist>();
@@ -66,10 +68,20 @@ function App() {
       <div className="app">
         <div className="app__header">
           <Text variant="display-2">Task Lists</Text>
-          <Button view="action" size="l" onClick={() => checklistModal.open()}>
-            <Icon data={Plus} size={18} />
-            New Checklist
-          </Button>
+          <div className="app__header-controls">
+            <div className="app__hard-mode-toggle">
+              <Switch
+                checked={hardMode}
+                onUpdate={toggleHardMode}
+                size="l"
+              />
+              <Text variant="body-2">Hard Mode</Text>
+            </div>
+            <Button view="action" size="l" onClick={() => checklistModal.open()}>
+              <Icon data={Plus} size={18} />
+              New Checklist
+            </Button>
+          </div>
         </div>
 
         <div className="app__content">

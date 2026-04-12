@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Modal, TextInput, TextArea, Button, Text } from '@gravity-ui/uikit';
 import type { Checklist } from '../../types';
+import { useChecklists } from '../../hooks/useChecklists';
 import './ChecklistModal.css';
 
 interface ChecklistModalProps {
@@ -16,6 +17,7 @@ interface ValidationErrors {
 }
 
 function ChecklistModalContent({ checklist, onClose, onSave }: Omit<ChecklistModalProps, 'open'>) {
+  const { hardMode } = useChecklists();
   const [title, setTitle] = useState(checklist?.title || '');
   const [description, setDescription] = useState(checklist?.description || '');
   const [errors, setErrors] = useState<ValidationErrors>({});
@@ -95,9 +97,11 @@ function ChecklistModalContent({ checklist, onClose, onSave }: Omit<ChecklistMod
 
   return (
     <div className="checklist-modal__form">
-      <h2 id="checklist-modal-title" className="checklist-modal__title">
-        {checklist ? 'Edit Checklist' : 'Create New Checklist'}
-      </h2>
+      {!hardMode &&
+        <h2 id={"checklist-modal-title"} className="checklist-modal__title">
+          {checklist ? 'Edit Checklist' : 'Create New Checklist'}
+        </h2>
+      }
       <div>
         <Text variant="body-2" className="checklist-modal__label">
           Title <span style={{ color: 'var(--g-color-text-danger)' }}>*</span>
@@ -139,8 +143,9 @@ function ChecklistModalContent({ checklist, onClose, onSave }: Omit<ChecklistMod
 }
 
 export const ChecklistModal = ({ open, checklist, onClose, onSave }: ChecklistModalProps) => {
+  const { hardMode } = useChecklists();
   return (
-    <Modal open={open} onClose={onClose} aria-labelledby="checklist-modal-title">
+    <Modal open={open} onClose={onClose} aria-labelledby={hardMode ? undefined : "checklist-modal-title"}>
       {open && (
         <ChecklistModalContent
           key={checklist?.id || 'new'}
